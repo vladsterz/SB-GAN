@@ -162,15 +162,17 @@ class CustomDataset(BaseDataset):
     def __init__(self, opt, transform=None):
         print(opt.dataset)
         inpath = 'datasets/%s'%opt.dataset
-        if opt.train:
-            self.datalist = "%s_info_train.txt"%inpath
-        else:
-            self.datalist = "%s_info_val.txt"%inpath
-        with open(self.datalist) as f:
-            # datalist is a txt file containing paths of images X, and their labels 
-            self.info = f.readlines()
-        self.X_paths = [x.strip().split(' ')[0] for x in self.info]
-        self.Ys = [int(x.strip().split(' ')[1]) for x in self.info]
+        # if opt.train:
+        #     self.datalist = "%s_info_train.txt"%inpath
+        # else:
+        #     self.datalist = "%s_info_val.txt"%inpath
+        # with open(self.datalist) as f:
+        #     # datalist is a txt file containing paths of images X, and their labels 
+        #     self.info = f.readlines()
+        # self.X_paths = [x.strip().split(' ')[0] for x in self.info]
+
+        self.X_paths = [os.path.join(r"D:\VCL\Users\vlad\Datasets\Structure3D\Structure3D\Structured3D_reformated", x, "semantic.png") for x in os.listdir(r"D:\VCL\Users\vlad\Datasets\Structure3D\Structure3D\Structured3D_reformated") if "empty_rawlight" in x]
+        self.Ys = [0] * len(self.X_paths)
         print("number of images:", len(self.Ys))
         if opt.train:
             randinds = np.random.permutation(len(self.Ys))
